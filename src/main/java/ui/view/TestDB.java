@@ -1,53 +1,53 @@
 package ui.view;
 
-import domain.db.Secret;
 import domain.model.Country;
 
 import java.sql.*;
 import java.util.Properties;
 
 public class TestDB {
-	public static void main(String[] args) throws SQLException {
-		Properties properties = new Properties();
-		String url = "jdbc:postgresql://databanken.ucll.be:62021/webontwerp";
+    public static void main(String[] args) throws SQLException {
+        // set properties for the db connection
+        Properties properties = new Properties();
+        String url = "jdbc:postgresql://databanken.ucll.be:62021/webontwerp";
+        try {
+            Class.forName("ui.view.Secret"); // implementation of abstract class Credentials
+            Secret.setPass(properties);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class ui.view.Secret with credentials not found!");
+        }
+        properties.setProperty("ssl", "true");
+        properties.setProperty("sslfactory", "org.postgresql.ssl.NonValidatingFactory");
+        properties.setProperty("sslmode", "prefer");
 
-		properties.setProperty("user", "");
+        // open the db connection
+        Connection connection = DriverManager.getConnection(url, properties);
 
-		properties.setProperty("password", "");
-		Secret.setPass(properties);	// implements line 17 and 18
-		properties.setProperty("ssl", "true");
-		properties.setProperty("sslfactory", "org.postgresql.ssl.NonValidatingFactory");
-		properties.setProperty("sslmode","prefer");
-		properties.setProperty("allowMultiQueries","true");
-		properties.setProperty("prepareThreshold","0");
+        // first set the search_path for this connection
+        String querySetSearchPath = "SET search_path = web3;";
+        Statement statement = connection.createStatement();
+        statement.execute(querySetSearchPath);
 
-		String setSearchPath = "SET search_path = web3b;";
+        // get all the countries
+        statement.executeQuery("SELECT * from country;");
+        ResultSet result = statement.getResultSet();
 
-		Connection connection = DriverManager.getConnection(url,properties);
-		connection.setAutoCommit(false);
-		Statement statement = connection.createStatement();
-		statement.execute(setSearchPath);
-		statement.executeQuery( "SELECT * from country");
-		connection.commit();
-		ResultSet result = statement.getResultSet();
+        System.out.println("All countries");
+        while (result.next()) {
+            String name = result.getString("name");
+            String capital = result.getString("capital");
+            int numberOfVotes = result.getInt("votes");
+            int numberOfInhabitants = result.getInt("inhabitants");
+            try {    // validation of data stored in database
+                Country country = new Country(name, numberOfInhabitants, capital, numberOfVotes);
+                System.out.println(country.toString());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        statement.close();
 
-		while(result.next()){
-			String name = result.getString("name");
-			String capital = result.getString("capital");
-			int numberOfVotes = result.getInt("votes");
-			int numberOfInhabitants = result.getInt("inhabitants");
-			try {	// validation of data stored in database
-				Country country = new Country(name, numberOfInhabitants, capital, numberOfVotes);
-				System.out.println(country.toString());
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-
-		statement.executeQuery("select * from country where votes=1;");
-		connection.commit();
-		statement.close();
-		connection.close();
-	}
+        // close the db connection
+        connection.close();
+    }
 }

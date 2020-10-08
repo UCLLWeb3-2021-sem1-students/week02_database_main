@@ -13,4 +13,4 @@ log/
 target/
 
 # password
-/src/main/java/domain/model/Secret.java
+/src/main/java/ui/view/Secret.java
