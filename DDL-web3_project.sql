@@ -34,10 +34,11 @@ CREATE TABLE web3_project_r123456.bezoek ( -- replace r123456 with your studentn
 );
 
 GRANT ALL ON TABLE web3_project_r123456.bezoek TO lector; -- replace r123456 with your studentnr
-GRANT ALL ON TABLE web3_project_r123456.bezoek TO local_lector; -- replace r123456 with your studentnr
 GRANT ALL ON TABLE web3_project_r123456.bezoek TO r123456; -- replace r123456 with your studentnr
 GRANT ALL ON TABLE web3_project_r123456.bezoek TO local_r123456; -- replace r123456 with your studentnr
 
-
 GRANT ALL ON SEQUENCE web3_project_r123456.bezoek_id_seq TO lector WITH GRANT OPTION;
+GRANT ALL ON SEQUENCE web3_project_r123456.bezoek_id_seq TO local_r123456;
+
 GRANT ALL ON SEQUENCE web3_project_r123456.gebruiker_id_seq TO lector WITH GRANT OPTION;
+GRANT ALL ON SEQUENCE web3_project_r123456.gebruiker_id_seq TO local_r123456;

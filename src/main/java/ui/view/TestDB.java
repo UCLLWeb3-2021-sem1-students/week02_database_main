@@ -40,7 +40,7 @@ public class TestDB {
             int numberOfInhabitants = result.getInt("inhabitants");
             try {    // validation of data stored in database
                 Country country = new Country(name, numberOfInhabitants, capital, numberOfVotes);
-                System.out.println(country.toString());
+                System.out.println(country);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
