@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS web3_project_r123456.bezoek; -- replace r123456 with your s
 
 CREATE TABLE web3_project_r123456.bezoek ( -- replace r123456 with your studentnr
                                              id SERIAL PRIMARY KEY,
+                                             person_id integer NULL,
                                              voornaam character varying(32) NOT NULL,
                                              familienaam character varying(32) NOT NULL,
                                              emailadres character varying(64) NOT NULL,
                                              telefoonnummer character varying(15) NOT NULL,
-                                             datum integer NOT NULL,
-                                             aankomstuur integer NOT NULL
+                                             date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 GRANT ALL ON TABLE web3_project_r123456.bezoek TO lector; -- replace r123456 with your studentnr

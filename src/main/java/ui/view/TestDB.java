@@ -23,13 +23,15 @@ public class TestDB {
         // open the db connection
         Connection connection = DriverManager.getConnection(url, properties);
 
-        // first set the search_path for this connection
+        // first an example for execute: set the search_path for this connection
         String querySetSearchPath = "SET search_path = web3;";
         Statement statement = connection.createStatement();
         statement.execute(querySetSearchPath);
 
+        // set the schema for your query
         // get all the countries
-        statement.executeQuery("SELECT * from country;");
+        // notice that web3 is de schema name and is used
+        statement.executeQuery("SELECT * from web3.country;");
         ResultSet result = statement.getResultSet();
 
         System.out.println("All countries");
@@ -40,7 +42,7 @@ public class TestDB {
             int numberOfInhabitants = result.getInt("inhabitants");
             try {    // validation of data stored in database
                 Country country = new Country(name, numberOfInhabitants, capital, numberOfVotes);
-                System.out.println(country);
+                System.out.println(country.toString());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
