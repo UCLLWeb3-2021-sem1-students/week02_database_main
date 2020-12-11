@@ -3,9 +3,10 @@ CREATE SCHEMA web3_project_r123456; -- replace r123456 with your studentnr
 GRANT ALL ON SCHEMA web3_project_r123456 TO lector WITH GRANT OPTION; -- replace r123456 with your studentnr
 GRANT ALL ON SCHEMA web3_project_r123456 TO r123456; -- replace r123456 with your studentnr
 GRANT ALL ON SCHEMA web3_project_r123456 TO local_r123456; -- replace r123456 with your studentnr
-RANT ALL ON TABLE web3_project_r123456 TO local_u0034562; -- lector K. Beheydt 
-GRANT ALL ON TABLE web3_project_r123456 TO r123456; -- replace r123456 with your studentnr
-GRANT ALL ON TABLE web3_project_r123456 TO local_r123456; -- replace r123456 with your studentnr
+GRANT ALL ON SCHEMA web3_project_r123456 TO local_u0082528; -- lector E. Steegmans 
+GRANT ALL ON SCHEMA web3_project_r123456 TO local_u0034562; -- lector K. Beheydt 
+GRANT ALL ON SCHEMA web3_project_r123456 TO local_u0015529; -- lector G. Jongen 
+
 
 SET search_path TO web3_project_r123456; -- replace r123456 with your studentnr
 
